@@ -1,0 +1,14 @@
+C:\Users\User\source\repos\PdnExam\DataBaseRepository\bin\Debug\netcoreapp2.1\DataBaseRepository.deps.json
+C:\Users\User\source\repos\PdnExam\DataBaseRepository\bin\Debug\netcoreapp2.1\DataBaseRepository.dll
+C:\Users\User\source\repos\PdnExam\DataBaseRepository\obj\Debug\netcoreapp2.1\DataBaseRepository.csprojAssemblyReference.cache
+C:\Users\User\source\repos\PdnExam\DataBaseRepository\obj\Debug\netcoreapp2.1\DataBaseRepository.csproj.CoreCompileInputs.cache
+C:\Users\User\source\repos\PdnExam\DataBaseRepository\obj\Debug\netcoreapp2.1\DataBaseRepository.AssemblyInfoInputs.cache
+C:\Users\User\source\repos\PdnExam\DataBaseRepository\obj\Debug\netcoreapp2.1\DataBaseRepository.AssemblyInfo.cs
+C:\Users\User\source\repos\PdnExam\DataBaseRepository\bin\Debug\netcoreapp2.1\DataBaseRepository.pdb
+C:\Users\User\source\repos\PdnExam\DataBaseRepository\obj\Debug\netcoreapp2.1\DataBaseRepository.dll
+C:\Users\User\source\repos\PdnExam\DataBaseRepository\obj\Debug\netcoreapp2.1\DataBaseRepository.pdb
+C:\Users\User\source\repos\PdnExam\DataBaseRepository\bin\Debug\netcoreapp2.1\DataBaseRepository.runtimeconfig.json
+C:\Users\User\source\repos\PdnExam\DataBaseRepository\bin\Debug\netcoreapp2.1\DataBaseRepository.runtimeconfig.dev.json
+C:\Users\User\source\repos\PdnExam\DataBaseRepository\bin\Debug\netcoreapp2.1\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\User\source\repos\PdnExam\DataBaseRepository\bin\Debug\netcoreapp2.1\Microsoft.AspNetCore.Identity.EntityFrameworkCore.xml
+C:\Users\User\source\repos\PdnExam\DataBaseRepository\obj\Debug\netcoreapp2.1\DataBaseRepository.csproj.CopyComplete

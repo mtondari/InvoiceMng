@@ -1,0 +1,60 @@
+﻿@using StoreManagement.ViewModels.Invoices
+
+@model InvoiceListViewModel
+
+@{
+    ViewData["Title"] = "مدیریت سفارشات";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<a class="button add-button" href="@Url.Action("Add","Invoices")">درج سفارش جدید</a>
+
+@using (Html.BeginForm())
+{
+    <div>
+        <ul class="search-section">
+            <li>نام محصول: @Html.EditorFor(o => o.SearchWord)</li>
+            <li>
+                <button type="submit" class="button search">جستجو</button>
+            </li>
+        </ul>
+    </div>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>قیمت (ریال)</th>
+            <th>وضعیت</th>
+            <th>تاریخ تولید</th>
+            <th>توضیحات</th>
+            <th>عملیات</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var invoice in Model.Invoices)
+        {
+            <tr>
+                <td>@invoice.FinalPriceStr</td>
+                <td>@invoice.StatusStr</td>
+                <td>@invoice.CreateDateTimeStr</td>
+                <td>
+                    @if (invoice.Description?.Length > 250)
+                    {
+                        @invoice.Description.Substring(250) <text>...</text>
+                    }
+                    else
+                    {
+                        @invoice.Description
+                    }
+                </td>
+                <td>
+                    <a href="@Url.Action("Edit","Invoices",new { id = invoice.InvoiceId })">
+                        ویرایش
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

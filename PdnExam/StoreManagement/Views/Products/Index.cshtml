@@ -1,0 +1,65 @@
+﻿@using StoreManagement.ViewModels.Products
+
+@model ProductListViewModel
+
+@{
+    ViewData["Title"] = "مدیریت محصولات";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<a class="button add-button" href="@Url.Action("Add","Products")">درج محصول جدید</a>
+
+@using (Html.BeginForm())
+{
+    <div>
+        <ul class="search-section">
+            <li>نام محصول: @Html.EditorFor(o => o.SearchWord)</li>
+            <li>وضعیت در انبار: @Html.DropDownListFor(o => o.SoldOut, Model.SoldOutOptions,"همه")</li>
+            <li>
+                <button type="submit" class="button search">جستجو</button>
+            </li>
+        </ul>
+    </div>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>نام</th>
+            <th>توضیحات</th>
+            <th>قیمت (ریال)</th>
+            <th>وضعیت در انبار</th>
+            <th>تاریخ تولید</th>
+            <th>تاریخ آخرین تغییر</th>
+            <th>عملیات</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model.Products)
+        {
+            <tr>
+                <td>@product.Title</td>
+                <td>
+                    @if (product.Description.Length > 250)
+                    {
+                        @product.Description.Substring(250) <text>...</text>
+                    }
+                    else
+                    {
+                        @product.Description
+                    }
+                </td>
+                <td>@product.PriceStr</td>
+                <td>@product.SoldOutStr</td>
+                <td>@product.CreateDateTimeStr</td>
+                <td>@product.LastUpdateDateTimeStr</td>
+                <td>
+                    <a href="@Url.Action("Edit","Products",new { id = product.ProductId })">
+                        ویرایش
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

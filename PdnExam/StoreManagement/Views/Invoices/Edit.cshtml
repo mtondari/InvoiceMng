@@ -1,0 +1,181 @@
+﻿@using StoreManagement.ViewModels.Invoices
+
+@model EditInvoiceViewModel
+
+@{
+    ViewData["Title"] = $"ویرایش سفارش شماره {Model.InvoiceId}";
+}
+
+@using (Html.BeginForm())
+{
+    <h1>@ViewData["Title"]</h1>
+    <table class="table">
+        <tbody>
+            <tr>
+                <td>توضیحات</td>
+                <td>@Html.TextAreaFor(model => model.Description)</td>
+            </tr>
+            <tr>
+                <td>وضعیت سفارش</td>
+                <td>@Html.DropDownListFor(model => model.Status, Model.StatusOptions)</td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <h3 style="text-align:center;">جزئیات سفارش</h3>
+                    <table class="invoice-items">
+                        <thead>
+                            <tr>
+                                <th>محصول</th>
+                                <th>تعداد</th>
+                                <th>قیمت واحد (ریال)</th>
+                                <th>قیمت نهایی (ریال)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var invoiceItem in Model.InvoiceItems)
+                            {
+                                <tr>
+                                    <td>
+                                        <input list="active-products" placeholder="نام محصول ..." value="@invoiceItem.ProductTitle">
+                                        <input type="hidden" name="product__id" value="@invoiceItem.ProductId">
+                                    </td>
+                                    <td>
+                                        <input type="number" name="product__count" value="@invoiceItem.Count">
+                                    </td>
+                                    <td class="priceStr">@invoiceItem.PriceItem</td>
+                                    <td>
+                                        <input type="number" name="product__final" value="@invoiceItem.FinalPrice">
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="4">
+                                    <button type="button" title="درج محصول جدید" onclick="AddInvoiceItemRow();">
+                                        درج آیتم جدید
+                                    </button>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2">
+                    @Html.HiddenFor(o => o.InvoiceId)
+                    <button type="submit">
+                        ثبت
+                    </button>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <datalist id="active-products">
+        @foreach (var product in Model.ActiveProductOptions)
+        {
+            <option data-value="@product.Id" data-price="@product.Price.ToPersianPriceString()">@product.Title</option>
+        }
+    </datalist>
+}
+
+
+@section Scripts
+    {
+    <script>
+        function Initiate() {
+            $(document).ready(function () {
+                for (var i = 0; i < $('.invoice-items tbody tr').length; i++) {
+                    var row = $($('.invoice-items tbody tr')[i])[0];
+
+                    $(row).find('input[list]')[0].addEventListener('input', function (e) {
+                        var input = e.target,
+                            list = input.getAttribute('list'),
+                            options = document.querySelectorAll('#' + list + ' option');
+
+                        $($(row).find('[name="product__count"]')[0].parentElement.parentElement).find('.priceStr').text();
+
+                        inputValue = input.value;
+
+                        for (var i = 0; i < options.length; i++) {
+                            var option = options[i];
+
+                            if (option.innerText === inputValue) {
+                                $($(input.parentElement.parentElement).find('[name="product__id"]')).val(option.getAttribute('data-value'));
+
+                                $(input.parentElement.parentElement).find('td.priceStr').text(option.getAttribute('data-price'))
+
+                                var count = $($(row).find('[name="product__count"]')[0]).val();
+                                var price = parseInt(row.find('.priceStr').text().replace(' ریال', '').replace(',', ''));
+                                $($(row).find('[name="product__final"]')[0]).val(count * price);
+                                break;
+                            }
+                        }
+                    });
+
+                    $(row).find('[name="product__count"]')[0].addEventListener('input', function (e) {
+                        var input = e.target,
+                            list = input.getAttribute('list');
+
+                        var count = $($(row).find('[name="product__count"]')[0]).val();
+                        var price = parseInt(row.find('.priceStr').text().replace(' ریال', '').replace(',', ''));
+
+                        $($(row).find('[name="product__final"]')[0]).val(count * price);
+
+                    });
+                }
+
+                intiated = true;
+            });
+        }
+        function AddInvoiceItemRow() {
+            $(document).ready(function () {
+                var newTr = '<tr><td><input list="active-products" placeholder="نام محصول ..."><input type="hidden" name="product__id"></td><td><input type="number" name="product__count"></td><td class="priceStr"></td><td><input type="number" name="product__final"></td></tr>'
+                $('.invoice-items tbody').append(newTr);
+
+                var row = $('.invoice-items tbody tr').last();
+
+                $(row).find('input[list]')[0].addEventListener('input', function (e) {
+                    var input = e.target,
+                        list = input.getAttribute('list'),
+                        options = document.querySelectorAll('#' + list + ' option');
+
+                    $($(row).find('[name="product__count"]')[0].parentElement.parentElement).find('.priceStr').text();
+
+                    inputValue = input.value;
+
+                    for (var i = 0; i < options.length; i++) {
+                        var option = options[i];
+
+                        if (option.innerText === inputValue) {
+                            $($(input.parentElement.parentElement).find('[name="product__id"]')).val(option.getAttribute('data-value'));
+
+                            $(input.parentElement.parentElement).find('td.priceStr').text(option.getAttribute('data-price'))
+
+                            var count = $($(row).find('[name="product__count"]')[0]).val();
+                            var price = parseInt(row.find('.priceStr').text().replace(' ریال', '').replace(',', ''));
+
+                            $($(row).find('[name="product__final"]')[0]).val(count * price);
+                            break;
+                        }
+                    }
+                });
+
+                $(row).find('[name="product__count"]')[0].addEventListener('input', function (e) {
+                    var input = e.target,
+                        list = input.getAttribute('list');
+
+                    var count = $($(row).find('[name="product__count"]')[0]).val();
+                    var price = parseInt(row.find('.priceStr').text().replace(' ریال', '').replace(',', ''));
+
+                    $($(row).find('[name="product__final"]')[0]).val(count * price);
+
+                });
+            });
+        }
+
+    </script>
+}

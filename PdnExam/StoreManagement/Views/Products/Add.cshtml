@@ -1,0 +1,37 @@
+﻿@using StoreManagement.ViewModels.Products
+
+@model AddProductViewModel
+
+@{
+    ViewData["Title"] = "درج محصول جدید";
+}
+
+@using (Html.BeginForm())
+{
+    <h1>@ViewData["Title"]</h1>
+    <table class="table">
+        <tr>
+            <td>نام محصول</td>
+            <td>@Html.EditorFor(model => model.Title)</td>
+        </tr>
+        <tr>
+            <td>توضیحات</td>
+            <td>@Html.TextAreaFor(model => model.Description)</td>
+        </tr>
+        <tr>
+            <td>قیمت</td>
+            <td>@Html.EditorFor(model => model.InitiatePrice) ریال</td>
+        </tr>
+        <tr>
+            <td>ناموجود</td>
+            <td>@Html.EditorFor(model => model.SoldOut)</td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button type="submit">
+                    ثبت
+                </button>
+            </td>
+        </tr>
+    </table>
+}

@@ -1,0 +1,45 @@
+﻿@using StoreManagement.ViewModels.Account
+
+@model UserListViewModel
+
+@{
+    ViewData["Title"] = "مدیریت کاربران";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<a class="button add-button" href="@Url.Action("Register","Account")" style="float:left;margin:10px;">ثبت کاربر جدید</a>
+
+@using (Html.BeginForm())
+{
+    <div>
+        <ul class="search-section">
+            <li>نام کابر: @Html.EditorFor(o => o.SearchedWord)</li>
+            <li>
+                <button type="submit" class="button search">جستجو</button>
+            </li>
+        </ul>
+    </div>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>نام کاربر</th>
+            <th>عملیات</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model.UserList)
+        {
+            <tr>
+                <td>@user.UserName</td>
+                <td>
+                    <a href="@Url.Action("Edit","Account",new { id = user.UserName })">
+                        ویرایش
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
